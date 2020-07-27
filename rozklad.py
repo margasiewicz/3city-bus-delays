@@ -46,15 +46,26 @@ class Timetable:
                 json.dump(bus_numbers_dict, outfile, sort_keys=False, indent=4)
 
     def delay(self, stop_id):
+        current_time = datetime.now().strftime("%H:%M")
         with open('bus_numbers.json') as json_file:
             bus_numbers = json.load(json_file)
-        with urlopen("https://ckan2.multimediagdansk.pl/delays?stopId=39100") as url:
+        with urlopen(f"https://ckan2.multimediagdansk.pl/delays?stopId={stop_id}") as url:
             data = json.loads(url.read().decode())
-            print('Linia'.ljust(6),'Kierunek'.ljust(22)[:22],'Rozkładowo'.ljust(10),'Faktycznie'.ljust(19))
-            for item in data['delay']:
-                route_id = str(item["routeId"])
-                print(bus_numbers[route_id].ljust(6),item["headsign"].ljust(22)[:22],item["theoreticalTime"].ljust(10),item["estimatedTime"].ljust(10))
+        print('Godzina:', current_time.rjust(46))
+        print('')
+        print('Linia'.ljust(6),'Kierunek'.ljust(22)[:22],'Przyjazd'.ljust(19))
+        for item in data['delay']:
+            #get current and estimated times and convert them to datetime objects
+            estimated_time = datetime.strptime(item["estimatedTime"], '%H:%M')
+            curr_time = datetime.strptime(current_time, '%H:%M')
 
+            time_delta = (estimated_time-curr_time).seconds//60
+            route_id = str(item["routeId"])
+
+            print(  bus_numbers[route_id].ljust(6), 
+                    item["headsign"].ljust(22)[:22], 
+                    str(time_delta), 'min')
+        
 
 rozklad = Timetable()
-rozklad.delay(39100)
+rozklad.delay(35111)
