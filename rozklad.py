@@ -1,11 +1,9 @@
 import json
 from urllib.request import urlopen
-from termcolor import colored
 from datetime import datetime
 
 
-class Rozklad:
-
+class Timetable:
     def update_stops_json(self):
         today = datetime.today().strftime('%Y-%m-%d')
         with urlopen('https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/4c4025f0-01bf-41f7-a39f-d156d201b82b/download/stops.json')\
@@ -47,6 +45,16 @@ class Rozklad:
             with open('bus_numbers.json', 'w') as outfile:
                 json.dump(bus_numbers_dict, outfile, sort_keys=False, indent=4)
 
+    def delay(self, stop_id):
+        with open('bus_numbers.json') as json_file:
+            bus_numbers = json.load(json_file)
+        with urlopen("https://ckan2.multimediagdansk.pl/delays?stopId=39100") as url:
+            data = json.loads(url.read().decode())
+            print('Linia'.ljust(6),'Kierunek'.ljust(22)[:22],'Rozkładowo'.ljust(10),'Faktycznie'.ljust(19))
+            for item in data['delay']:
+                route_id = str(item["routeId"])
+                print(bus_numbers[route_id].ljust(6),item["headsign"].ljust(22)[:22],item["theoreticalTime"].ljust(10),item["estimatedTime"].ljust(10))
 
-rozklad = Rozklad()
-rozklad.update_stops_json()
+
+rozklad = Timetable()
+rozklad.delay(39100)
