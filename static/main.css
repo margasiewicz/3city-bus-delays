@@ -1,7 +1,0 @@
-@font-face{
-    font-family: trial;
-    src: url('hellovetica.ttf');
-    font-weight: bold;}
-    
-    body {font-family: georgia; color:green}
-    h1 {font-family:trial; color: pink}

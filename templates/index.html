@@ -2,11 +2,11 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
       </head>
   <body>
 
-    <table class="table table-borderless table-dark"">
+    <table class="table table-borderless table-dark">
       <thead>
       <tr>
           <td scope="col"> Linia </td> 
@@ -17,9 +17,9 @@
     <tbody>
       {% for item in data %}
       <tr>
-        <td > {{ item['route_id'] }} </td>
-        <td> {{ item['headsign'] }} </td>
-        <td> {{ item['delay_mins'] }}min </td>
+        <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['route_id'] }} </td>
+        <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['headsign'] }} </td>
+        <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['delay_mins'] }}min </td>
     </tr>
     {% endfor %}
       
