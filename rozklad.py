@@ -45,7 +45,7 @@ class Timetable:
             with open('bus_numbers.json', 'w') as outfile:
                 json.dump(bus_numbers_dict, outfile, sort_keys=False, indent=4)
 
-    def delay(self, stop_id):
+    def print_delay(self, stop_id):
         current_time = datetime.now().strftime("%H:%M")
         with open('bus_numbers.json') as json_file:
             bus_numbers = json.load(json_file)
@@ -65,7 +65,24 @@ class Timetable:
             print(  bus_numbers[route_id].ljust(6), 
                     item["headsign"].ljust(22)[:22], 
                     str(time_delta), 'min')
-        
+    def json_delay(self, stop_id):
+        json_delays = []
+        current_time = datetime.now().strftime("%H:%M")
+        with open('bus_numbers.json') as json_file:
+            bus_numbers = json.load(json_file)
+        with urlopen(f"https://ckan2.multimediagdansk.pl/delays?stopId={stop_id}") as url:
+            data = json.loads(url.read().decode())
+        for item in data['delay']:
+            estimated_time = datetime.strptime(item["estimatedTime"], '%H:%M')
+            curr_time = datetime.strptime(current_time, '%H:%M')
+            time_delta = (estimated_time-curr_time).seconds//60
+            route_id = str(item["routeId"])
+            dict_for_appending = {
+                'route_id':bus_numbers[route_id],
+                'headsign':item["headsign"],
+                'delay_mins':time_delta
+            }
+            json_delays.append(dict_for_appending)
 
-rozklad = Timetable()
-rozklad.delay(35111)
+        json_delays = json.dumps(json_delays, indent=4)
+        return json_delays
