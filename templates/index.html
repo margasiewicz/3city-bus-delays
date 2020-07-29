@@ -1,0 +1,20 @@
+<table>
+  <tr>
+      <td> Linia </td> 
+      <td> Kierunek </td>
+      <td> Za </td>
+  </tr>
+  {% for item in data %}
+  <tr>
+    {% for col in colnames %}
+    <td> {{ item[col] }} </td> 
+    {% endfor %}
+</tr>
+{% endfor %}
+  
+  
+  
+
+
+
+</table>
