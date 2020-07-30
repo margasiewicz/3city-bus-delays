@@ -1,38 +1,52 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-      </head>
-  <body>
 
-    <table class="table table-borderless table-dark">
-      <thead>
-      <tr>
-          <td scope="col"> Linia </td> 
-          <td scope="col"> Kierunek </td>
-          <td scope="col"> Za </td>
-      </tr>
-    </thead>
-    <tbody>
-      {% for item in data %}
-      <tr>
-        <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['route_id'] }} </td>
-        <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['headsign'] }} </td>
-        <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['delay_mins'] }}min </td>
-    </tr>
-    {% endfor %}
-      
-      
-      
-    
-    
-  </tbody>
-    </table>
-  
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+<head>
+  <meta charset="utf-8">
+<title>3City</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+<body>
+
+{{ form.autocomp.label }}: {{ form.autocomp }}
+
+<script>
+  $(function() {
+      $.ajax({
+          url: '{{ url_for("autocomplete") }}'
+          }).done(function (data){
+              $('#stop_autocomplete').autocomplete({
+                  source: data,
+                  minLength: 2
+              });
+          });
+      });
+</script>
+
+<div style="width: 50%; margin: 0 auto;">
+  <table class="table table-borderless table-dark">
+     <thead>
+        <tr>
+           <td scope="col"> Linia </td>
+           <td scope="col"> Kierunek </td>
+           <td scope="col"> Za </td>
+        </tr>
+     </thead>
+     <tbody>
+        {% for item in data %}
+        <tr>
+           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['route_id'] }} </td>
+           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['headsign'] }} </td>
+           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['delay_mins'] }}min </td>
+        </tr>
+        {% endfor %}
+     </tbody>
+  </table>
+</div>
+</body>
 </html>
