@@ -11,19 +11,17 @@ class SearchForm(Form):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
-        number = request.form['autocomp']
-        return redirect(url_for('bus', number=number))
+        stop_name = request.form['autocomp']
+        return redirect(url_for('bus', stop_name=stop_name))
     else:
         form = SearchForm(request.form)
-        data = Timetable()
-        data = json.loads(data.json_delay(36050))
-        return render_template('index.html', data=data, form=form)
+        return render_template('index.html',form=form)
 
-@app.route('/bus/<number>', methods=['GET','POST'])
-def bus(number):
+@app.route('/bus/<stop_name>', methods=['GET','POST'])
+def bus(stop_name):
     form = SearchForm(request.form)
     data = Timetable()
-    data = json.loads(data.json_delay(number))
+    data = data.json_delay_from_name(stop_name)
     return render_template('bus.html', data=data, form=form)
 
 

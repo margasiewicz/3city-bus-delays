@@ -86,7 +86,21 @@ class Timetable:
 
         json_delays = json.dumps(json_delays, indent=4)
         return json_delays
-# t = Timetable()
-# delay = t.json_delay(39100)
 
+    def json_delay_from_name(self, stop_name):
+        json_delays = []
+        current_time = datetime.now().strftime("%H:%M")
+        with open('stops.json') as json_file:
+            bus_numbers = json.load(json_file)
+        bus_numbers = bus_numbers[stop_name]
+        return [self.json_delay(item) for item in bus_numbers]
+
+# t = Timetable()
+# delay = t.json_delay_from_name('Arciszewskich')
+# d2 = t.json_delay(39100)
+# t.print_delay(39100)
 # print(type(delay))
+# print(type(delay[0]))
+# print(delay)
+# print(type(d2))
+# print(d2)

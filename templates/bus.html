@@ -32,7 +32,7 @@
           });
       });
 </script>
-
+{% for item in data %}
 <div style="width: 50%; margin: 0 auto;">
   <table class="table table-borderless table-dark">
      <thead>
@@ -43,15 +43,16 @@
         </tr>
      </thead>
      <tbody>
-        {% for item in data %}
+        {% for record in item %}
         <tr>
-           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['route_id'] }} </td>
-           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['headsign'] }} </td>
-           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ item['delay_mins'] }}min </td>
+           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ record['route_id'] }} </td>
+           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ record['headsign'] }} </td>
+           <td style="font-family:'minecraftiaregular'; color: yellow"> {{ record['delay_mins'] }}min </td>
         </tr>
         {% endfor %}
      </tbody>
   </table>
 </div>
+{% endfor %}
 </body>
 </html>
