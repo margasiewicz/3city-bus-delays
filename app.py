@@ -1,7 +1,9 @@
-from rozklad import Timetable
+from timetable import Timetable
 from flask import Flask, render_template, request, redirect, url_for, Response
 import json
 from wtforms import TextField, Form
+
+
 app = Flask(__name__)
 
 class SearchForm(Form):
@@ -35,6 +37,7 @@ def autocomplete():
     stops = [item for item in stops]
 
     return Response(json.dumps(stops), mimetype='application/json')
+    
 if __name__ == '__main__':
     app.debug = True
     app.run()

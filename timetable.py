@@ -73,11 +73,12 @@ class Timetable:
         with urlopen(f"https://ckan2.multimediagdansk.pl/delays?stopId={stop_id}") as url:
             data = json.loads(url.read().decode())
         for item in data['delay']:
-            estimated_time = datetime.strptime(item["estimatedTime"], '%H:%M')
-            curr_time = datetime.strptime(current_time, '%H:%M')
-            time_delta = (estimated_time-curr_time).seconds//60
-            #do not display if bus coming in over 10mins
-            if time_delta<10:
+            if len(json_delays)<8:
+                estimated_time = datetime.strptime(item["estimatedTime"], '%H:%M')
+                curr_time = datetime.strptime(current_time, '%H:%M')
+                time_delta = (estimated_time-curr_time).seconds//60
+                #do not display if bus coming in over 10mins
+                
                 route_id = str(item["routeId"])
                 dict_for_appending = {
                     'route_id':bus_numbers[route_id],
@@ -86,7 +87,7 @@ class Timetable:
                 }
                 json_delays.append(dict_for_appending)
             else:
-                pass
+                break
 
         # json_delays = json.dumps(json_delays, indent=4)
         return json_delays
