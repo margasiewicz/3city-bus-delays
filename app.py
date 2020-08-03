@@ -20,9 +20,10 @@ def index():
 @app.route('/bus/<stop_name>', methods=['GET','POST'])
 def bus(stop_name):
     form = SearchForm(request.form)
-    data = Timetable()
-    data = data.json_delay_from_name(stop_name)
+    timetable = Timetable()
+    data = timetable.json_delay_from_name(stop_name)
     # data = json.loads(data)
+    data = [x for x in data if x != []]
     return render_template('bus.html', data=data, form=form)
 
 

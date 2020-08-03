@@ -76,6 +76,7 @@ class Timetable:
             estimated_time = datetime.strptime(item["estimatedTime"], '%H:%M')
             curr_time = datetime.strptime(current_time, '%H:%M')
             time_delta = (estimated_time-curr_time).seconds//60
+            #do not display if bus coming in over 10mins
             if time_delta<10:
                 route_id = str(item["routeId"])
                 dict_for_appending = {
