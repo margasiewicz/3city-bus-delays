@@ -84,7 +84,7 @@ class Timetable:
             }
             json_delays.append(dict_for_appending)
 
-        json_delays = json.dumps(json_delays, indent=4)
+        # json_delays = json.dumps(json_delays, indent=4)
         return json_delays
 
     def json_delay_from_name(self, stop_name):
@@ -96,11 +96,4 @@ class Timetable:
         return [self.json_delay(item) for item in bus_numbers]
 
 # t = Timetable()
-# delay = t.json_delay_from_name('Arciszewskich')
-# d2 = t.json_delay(39100)
-# t.print_delay(39100)
-# print(type(delay))
-# print(type(delay[0]))
-# print(delay)
-# print(type(d2))
-# print(d2)
+# d2 = t.json_delay_from_name('Arciszewskich')

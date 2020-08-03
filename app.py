@@ -22,6 +22,7 @@ def bus(stop_name):
     form = SearchForm(request.form)
     data = Timetable()
     data = data.json_delay_from_name(stop_name)
+    # data = json.loads(data)
     return render_template('bus.html', data=data, form=form)
 
 
