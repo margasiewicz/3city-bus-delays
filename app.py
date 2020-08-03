@@ -5,7 +5,7 @@ from wtforms import TextField, Form
 app = Flask(__name__)
 
 class SearchForm(Form):
-    autocomp = TextField('Insert Bus Stop', id='stop_autocomplete')
+    autocomp = TextField('Przystanek', id='stop_autocomplete')
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])

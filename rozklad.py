@@ -76,13 +76,16 @@ class Timetable:
             estimated_time = datetime.strptime(item["estimatedTime"], '%H:%M')
             curr_time = datetime.strptime(current_time, '%H:%M')
             time_delta = (estimated_time-curr_time).seconds//60
-            route_id = str(item["routeId"])
-            dict_for_appending = {
-                'route_id':bus_numbers[route_id],
-                'headsign':item["headsign"],
-                'delay_mins':time_delta
-            }
-            json_delays.append(dict_for_appending)
+            if time_delta<10:
+                route_id = str(item["routeId"])
+                dict_for_appending = {
+                    'route_id':bus_numbers[route_id],
+                    'headsign':item["headsign"],
+                    'delay_mins':time_delta
+                }
+                json_delays.append(dict_for_appending)
+            else:
+                pass
 
         # json_delays = json.dumps(json_delays, indent=4)
         return json_delays
