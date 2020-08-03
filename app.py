@@ -28,7 +28,7 @@ def bus(stop_name):
 
 @app.route('/_autocomplete', methods=['GET'])
 def autocomplete():
-    with open('stops.json') as json_file:
+    with open('json_files/stops.json') as json_file:
         stops = json.load(json_file)
     
     stops = [item for item in stops]

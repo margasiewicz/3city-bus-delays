@@ -22,7 +22,7 @@ class Timetable:
                 else:
                     stops_dict[stop_name] = [stop_id]
             
-            with open('stops.json', 'w') as outfile:
+            with open('json_files/stops.json', 'w') as outfile:
                 json.dump(stops_dict, outfile, sort_keys=True, indent=4)
 
 
@@ -42,12 +42,12 @@ class Timetable:
                 else:
                     bus_numbers_dict[route_id] = route_name
             
-            with open('bus_numbers.json', 'w') as outfile:
+            with open('json_files/bus_numbers.json', 'w') as outfile:
                 json.dump(bus_numbers_dict, outfile, sort_keys=False, indent=4)
 
     def print_delay(self, stop_id):
         current_time = datetime.now().strftime("%H:%M")
-        with open('bus_numbers.json') as json_file:
+        with open('json_files/bus_numbers.json') as json_file:
             bus_numbers = json.load(json_file)
         with urlopen(f"https://ckan2.multimediagdansk.pl/delays?stopId={stop_id}") as url:
             data = json.loads(url.read().decode())
@@ -68,7 +68,7 @@ class Timetable:
     def json_delay(self, stop_id):
         json_delays = []
         current_time = datetime.now().strftime("%H:%M")
-        with open('bus_numbers.json') as json_file:
+        with open('json_files/bus_numbers.json') as json_file:
             bus_numbers = json.load(json_file)
         with urlopen(f"https://ckan2.multimediagdansk.pl/delays?stopId={stop_id}") as url:
             data = json.loads(url.read().decode())
@@ -93,7 +93,7 @@ class Timetable:
     def json_delay_from_name(self, stop_name):
         json_delays = []
         current_time = datetime.now().strftime("%H:%M")
-        with open('stops.json') as json_file:
+        with open('json_files/stops.json') as json_file:
             bus_numbers = json.load(json_file)
         bus_numbers = bus_numbers[stop_name]
         return [self.json_delay(item) for item in bus_numbers]
