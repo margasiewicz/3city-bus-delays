@@ -19,7 +19,7 @@ def index():
         form = SearchForm(request.form)
         return render_template('index.html',form=form)
 
-@app.route('/bus/<stop_name>', methods=['GET','POST'])
+@app.route('/bus/<stop_name>', methods=['GET'])
 def bus(stop_name):
     form = SearchForm(request.form)
     timetable = Timetable()

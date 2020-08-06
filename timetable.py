@@ -65,6 +65,7 @@ class Timetable:
             print(  bus_numbers[route_id].ljust(6), 
                     item["headsign"].ljust(22)[:22], 
                     str(time_delta), 'min')
+                    
     def json_delay(self, stop_id):
         json_delays = []
         current_time = datetime.now().strftime("%H:%M")
@@ -73,12 +74,11 @@ class Timetable:
         with urlopen(f"https://ckan2.multimediagdansk.pl/delays?stopId={stop_id}") as url:
             data = json.loads(url.read().decode())
         for item in data['delay']:
-            if len(json_delays)<8:
+            #do not display more than eight rows
+            if len(json_delays) <= 8:
                 estimated_time = datetime.strptime(item["estimatedTime"], '%H:%M')
                 curr_time = datetime.strptime(current_time, '%H:%M')
-                time_delta = (estimated_time-curr_time).seconds//60
-                #do not display if bus coming in over 10mins
-                
+                time_delta = (estimated_time-curr_time).seconds//60           
                 route_id = str(item["routeId"])
                 dict_for_appending = {
                     'route_id':bus_numbers[route_id],
@@ -89,16 +89,11 @@ class Timetable:
             else:
                 break
 
-        # json_delays = json.dumps(json_delays, indent=4)
         return json_delays
 
     def json_delay_from_name(self, stop_name):
-        json_delays = []
         current_time = datetime.now().strftime("%H:%M")
         with open('json_files/stops.json') as json_file:
             bus_numbers = json.load(json_file)
         bus_numbers = bus_numbers[stop_name]
         return [self.json_delay(item) for item in bus_numbers]
-
-# t = Timetable()
-# d2 = t.json_delay_from_name('Arciszewskich')
