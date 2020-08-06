@@ -1,8 +1,8 @@
-from TrzyCityBus.timetable import Timetable
+from ThreeCityDelays.timetable import Timetable
 from flask import Flask, render_template, request, redirect, url_for, Response
 import json
 from wtforms import TextField, Form
-from TrzyCityBus import app
+from ThreeCityDelays import app
 
 class SearchForm(Form):
     autocomp = TextField('Przystanek', id='stop_autocomplete')
