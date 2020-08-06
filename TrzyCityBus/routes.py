@@ -1,10 +1,8 @@
-from timetable import Timetable
+from TrzyCityBus.timetable import Timetable
 from flask import Flask, render_template, request, redirect, url_for, Response
 import json
 from wtforms import TextField, Form
-
-
-app = Flask(__name__)
+from TrzyCityBus import app
 
 class SearchForm(Form):
     autocomp = TextField('Przystanek', id='stop_autocomplete')
@@ -37,7 +35,3 @@ def autocomplete():
     stops = [item for item in stops]
 
     return Response(json.dumps(stops), mimetype='application/json')
-    
-if __name__ == '__main__':
-    app.debug = True
-    app.run()
